@@ -1,0 +1,23 @@
+                                   BUGS:
+
+1)  backend → vacation-model → in the date section, check if the date is "date" type 
+    or "string" type. ==> string!
+
+2)  backend + database → how to add admin to the database ==> Hardcoded!
+
+3)  backend → how to make the date aper without the time. it changes the date because of the
+    the time zone. ==> ask google.
+
+4)  backend → logic&controller → add new vacation and delete are full of bugs..
+
+---------------------------------------------------------------------------
+                            IDEAS FOR IMPROVEMENT:
+
+1)  When clicking on a vacation card - there will be a pop-up that describes:
+    A.  extra different things about the place.
+    B.  current wether at the location + the wether at the location on the dates of the
+        vacation.
+    C.  more photos of the vacation (Add arrows to the image square with which you can
+        browse through the images).
+    
+2)  At the navbar or below it add a filter option selection.

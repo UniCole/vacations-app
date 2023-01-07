@@ -1,0 +1,8 @@
+                                    To Do:
+
+✔️  1)  backend → add one vacation, update vacation, delete vacation => logic, controller +
+    postman (to admin only)
+
+    2)  backend → finish authorizations and authentication 
+
+✔️  3)  database → add more vacations. 
