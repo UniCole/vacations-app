@@ -19,7 +19,7 @@ function Login(): JSX.Element {
                 title: "Welcome back!",
                 icon: "success"
             });
-            navigate("/home");
+            navigate("/vacations");
 
         }
         catch (err: any) {

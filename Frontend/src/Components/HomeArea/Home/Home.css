@@ -1,18 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300&display=swap');
 
-iframe {
-    width:346px;
-    height: 195px;
-    border-radius: 5px;
-    border:none;
-    box-shadow: 5px 5px 10px;
+
+.Home {
+    background: url("../../../Assets/Videos/backgroundVideo.mp4");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    margin-top: -30px;
+    align-content: center;
+    text-align: center;
 }
 
-h1{
-    margin-top: 70px;
-    margin-bottom: 40px;
+video {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.Home>p {
+    position: absolute;
+    font-family: 'Kalam', cursive;
+    z-index: 3;
+    align-content: center;
+    top: 40%;
+    left: 5%;
+    right: 5%;
+    font-size: 26px;
+    color: rgb(250, 250, 250);
+    text-align: center;
+}
+
+.Home>p>a {
+    margin:20px;
+    color: wheat;
+    font-size: 34px;
+    font-weight: 700;
+}
+
+.Home>p>a:hover {
+    color:  #d7b379;
+    font-weight: bolder;
+}
+
+h1 {
+    align-content: center;
+    margin-top: -245px;
     font-family: 'Lobster', cursive;
     color: #d7b379;
-    font-size:66px;
+    font-size: 75px;
     -webkit-text-stroke: 0.1px rgb(250, 250, 250);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
 }

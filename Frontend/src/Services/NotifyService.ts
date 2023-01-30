@@ -1,4 +1,3 @@
-import { Notyf } from 'notyf';
 import swal from 'sweetalert';
 
 class NotifyService {

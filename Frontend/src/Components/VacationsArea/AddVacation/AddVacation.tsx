@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import VacationModel from "../../../Models/VacationModel";
+import notifyService from "../../../Services/NotifyService";
 import vacationsService from "../../../Services/VacationsService";
 import useVerifyLoggedIn from "../../../Utils/useVerifyLoggedIn";
 import "./AddVacation.css";
@@ -19,15 +20,15 @@ function AddVacation(): JSX.Element {
     async function send(vacation: VacationModel) {
         
         if (new Date(vacation.checkIn) > new Date(vacation.checkOut)) {
-            return alert("Check In can't be in the past!");
+            return notifyService.error("Check In can't be in the past!");
         }
         try {
             await vacationsService.addVacation(vacation);
-            alert("vacation has been added successfully!");
+            notifyService.success("vacation has been added successfully!");
             navigate("/vacations");
         }
         catch (err: any) {
-            alert(err.message);
+            notifyService.error(err);
         }
 
     }
