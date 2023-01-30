@@ -2,11 +2,16 @@ import UserModel from "../4-models/user-model";
 import jwt from "jsonwebtoken";
 import { Request } from "express";
 import RoleModel from "../4-models/role-model";
+import crypto from "crypto";
 
 // Create secret key = a string for our rest API:
+
 const secretKey = "ChickenLittle";
 
 function getNewToken(user: UserModel): string {
+
+    // Never return passwords to frontend!
+    delete user.password;
 
     // Create a container for the user object:
     const container = { user };
@@ -17,7 +22,6 @@ function getNewToken(user: UserModel): string {
     // Generate token:
     const token = jwt.sign(container, secretKey, options);
 
-    // Return the token:
     return token;
 }
 
@@ -25,10 +29,6 @@ function verifyToken(request: Request): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => { // To Promisify
 
         try {
-
-            // Token format: 
-            // authorization header -----> "Bearer the-token"
-            //                              01234567
 
             // Extract header:
             const header = request.header("authorization");
@@ -68,6 +68,19 @@ function verifyToken(request: Request): Promise<boolean> {
     });
 }
 
+const salt = "MakeThingsGoRight";
+
+function hash(plaintext: string): string {
+
+    if (!plaintext) return null;
+
+    // Hash with salt:
+    const hashedText = crypto.createHmac("sha512", salt).update(plaintext).digest("hex");
+
+    return hashedText;
+
+}
+
 async function verifyAdmin(request: Request): Promise<boolean> {
 
     // First check if user logged in:
@@ -85,16 +98,34 @@ async function verifyAdmin(request: Request): Promise<boolean> {
     // Extract container from token:
     const container: any = jwt.decode(token);
 
-    // Extract user:
-    const user = container.user;
+    //Extract user:
+    const user: UserModel = container.user;
 
-    // Return if user is admin, otherwise return false:
-    return user.role === RoleModel.Admin;
+    //Return if user is admin, otherwise return false:
+    return user.roleId === RoleModel.admin;
+
 }
 
+async function verifyUser(request: Request): Promise<boolean> {
+    const isLoggedIn = await verifyToken(request);
+
+    if (!isLoggedIn) return false;
+
+    const header = request.header("authorization");
+    const token = header.substring(7);
+
+    const container: any = jwt.decode(token);
+
+    const user: UserModel = container.user;
+
+    return user.roleId === RoleModel.user;
+
+}
 
 export default {
     getNewToken,
     verifyToken,
-    verifyAdmin
+    hash,
+    verifyAdmin,
+    verifyUser,
 };

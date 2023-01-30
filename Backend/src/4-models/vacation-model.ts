@@ -1,35 +1,36 @@
+import { UploadedFile } from "express-fileupload";
 import Joi from "joi";
 
 class VacationModel {
     public vacationId: number;
     public description: string;
     public destination: string;
-    // public image: FileList;
+    public imageName: string;
     public checkIn: string;
     public checkOut: string;
-    public price: string;
-    public followersAmount: number;
+    public price: number;
+    public image: UploadedFile; // The file uploaded by the frontend
 
     public constructor(vacation: VacationModel) {
         this.vacationId = vacation.vacationId;
         this.description = vacation.description;
         this.destination = vacation.destination;
-        // this.image = vacation.image;
+        this.imageName = vacation.imageName;
         this.checkIn = vacation.checkIn;
         this.checkOut = vacation.checkOut;
         this.price = vacation.price;
-        this.followersAmount = vacation.followersAmount;
+        this.image = vacation.image;
     }
 
     public static validationSchema = Joi.object({
         vacationId: Joi.number().optional().integer().positive(),
-        description: Joi.string().required().min(50).max(500),
-        destination: Joi.string().required().min(2).max(100),
-        // image: Joi.string().required()
-        checkIn: Joi.string().required().min(10).max(10), 
-        checkOut: Joi.string().required().min(10).max(10),
-        price: Joi.string().required().min(3).max(15),
-        followersAmount: Joi.number().optional().integer().positive().max(5)
+        description: Joi.string().required().min(10).max(2500),
+        destination: Joi.string().required().min(2).max(70),
+        imageName: Joi.string().optional(),
+        checkIn: Joi.string().required().min(2).max(20),
+        checkOut: Joi.string().required().min(2).max(20),
+        price: Joi.number().required().min(90).max(40000),
+        image: Joi.object().optional()
     });
 
     public validate(): string {

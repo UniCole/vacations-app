@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Candal&display=swap');
+
+.VacationCardAdmin>.AdminsCard {
+    width: 357px;
+    height: 450px;
+    border-radius: 7px;
+    padding: 0px;
+    margin: 20px;
+    backdrop-filter: blur(25px);
+    transition: all 0.9s;
+    box-shadow: 0 4px 18px 0 #d7b379ad;
+    position: relative;
+    border: 2px solid wheat;
+    transition: 0.5s ease-out;
+    overflow: visible;
+}
+
+.VacationCardAdmin>.AdminsCard:hover {
+    width: 357px;
+    height: 450px;
+    border-radius: 7px;
+    padding: 0px;
+    margin: 20px;
+    backdrop-filter: blur(25px);
+    transition: all 0.9s;
+    position: relative;
+    border: 2px solid wheat;
+    transition: 0.5s ease-out;
+    overflow: visible;
+    border-color: #d7b379;
+    box-shadow: 0 4px 18px 0 rgba(58, 34, 10, 0.639);
+}
+
+.VacationCardAdmin>.AdminsCard>img {
+    width: 100%;
+    height: 245px;
+    margin-top: 1px;
+    margin-left: 0px;
+    border-radius: 4px;
+}
+
+.VacationCardAdmin>.AdminsCard>span {
+    position: relative;
+    margin-top: 5px;
+    margin-left: 250px;
+    color: wheat;
+}
+
+.VacationCardAdmin>.AdminsCard>p {
+    margin: 5px;
+    color: wheat;
+}
+
+.VacationCardAdmin>.AdminsCard>.Destination {
+    font-family: 'Candal', sans-serif;
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 7px;
+    margin-bottom: 13px;
+    color: #d7b379;
+}
+
+.AdminsCard:hover>#card-button {
+    transform: translate(-50%, 50%);
+    opacity: 1;
+}
+
+#card-button {
+    transform: translate(-50%, 125%);
+    width: 60%;
+    border-radius: 1rem;
+    border: none;
+    background-color: #d7b379;
+    color: #fff;
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    opacity: 0;
+    transition: 0.3s ease-out;
+    cursor: pointer;
+}
+
+.EditButton {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+}
+
+.DeleteButton {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    margin-left: 263px;
+    margin-top: 5px;
+}
+
+.EditBtn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.DeleteBtn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}

@@ -1,66 +1,145 @@
 import { OkPacket } from "mysql";
 import dal from "../2-utils/dal";
-import { ResourceNotFoundErrorModel, ValidationErrorModel } from "../4-models/error-models";
+import { ResourceNotFoundError, ValidationError } from "../4-models/error-models";
 import VacationModel from "../4-models/vacation-model";
-
+import { v4 as uuid } from "uuid"; // v4 function change to uuid name
+import fs from "fs";
 
 // Get all vacations: 
 async function getAllVacations(): Promise<VacationModel[]> {
 
-    // select all vacations:
-    const sql = `SELECT * FROM vacations`;
+    // Query:
+    const sql = `SELECT DISTINCT
+        V.vacationId, description, destination, imageName, DATE_FORMAT(checkIn,'%Y-%m-%d') AS checkIn, DATE_FORMAT(checkOut,'%Y-%m-%d') AS checkOut, price,
+        EXISTS(SELECT * FROM followers WHERE vacationId = F.vacationId) AS isFollowing,
+        COUNT(F.userId) AS followersAmount
+        FROM vacations AS V LEFT JOIN followers AS F
+        ON V.vacationId = F.vacationId 
+        GROUP BY vacationId
+        ORDER BY V.checkIn DESC`;
 
     // Execute:
     const vacations = await dal.execute(sql);
 
-    // return all vacations:
+    // Return all vacations:
     return vacations;
+
 }
 
-// // Add new vacation: 
-// async function addVacation(vacation: VacationModel): Promise<VacationModel> {
+async function getVacationsForUser(userId: number) {
 
-//     // Validation: 
-//     const error = vacation.validate();
-//     if (error) throw new ValidationErrorModel(error);
+    // Query: 
+    const sql = `
+    SELECT DISTINCT
+        V.vacationId, description, destination, imageName, DATE_FORMAT(checkIn,'%Y-%m-%d') AS checkIn, DATE_FORMAT(checkOut,'%Y-%m-%d') AS checkOut, price,
+        EXISTS(SELECT * FROM followers WHERE vacationId = F.vacationId AND userId = ?) AS isFollow,
+        COUNT (F.userId) AS followersAmount
+        FROM vacations AS V LEFT JOIN followers AS F
+        ON V.vacationId = F.vacationId 
+        GROUP BY vacationId
+        ORDER BY checkIn DESC
+    `;
 
-//     // Query: 
-//     const sql = `
-//         INSERT INTO vacations VALUES(
-//             DEFAULT,
-//             '${vacation.description}',
-//             '${vacation.destination}',
-//             '${vacation.checkIn}',
-//             '${vacation.checkOut}',
-//             '${vacation.price})',
-//             DEFAULT;`;
+    // Execute:
+    const vacations = await dal.execute(sql, [userId]);
 
-//     // Execute: 
-//     const info: OkPacket = await dal.execute(sql);
+    // Return all vacations:
+    return vacations;
 
-//     // Set auto increment id back to vacation: 
-//     vacation.vacationId = info.insertId;
+}
 
-//     // Return:
-//     return vacation;
-// }
+// Add new vacation: 
+async function addVacation(vacation: VacationModel): Promise<VacationModel> {
 
-// // DELETE vacation:
-// async function deleteVacation(vacationId: number): Promise<void> {
+    //Validation:
+    const error = vacation.validate();
+    if (error) throw new ValidationError(error);
 
-//     // Query: 
-//     const sql = `DELETE FROM vacations WHERE vacationId = ${vacationId}`;
+    // Save image to disk if exist:
+    if (vacation.image) {
 
-//     // Execute: 
-//     const info: OkPacket = await dal.execute(sql);
+        const extension = vacation.image.name.substring(vacation.image.name.lastIndexOf("."));
+        vacation.imageName = uuid() + extension;
+        await vacation.image.mv("./src/1-assets/images/" + vacation.imageName);
+        delete vacation.image;
 
-//     // If not exist:
-//     if (info.affectedRows === 0) throw new ResourceNotFoundErrorModel(vacationId);
-// }
+    }
 
+    // Query:
+    const sql = `INSERT INTO vacations VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)`;
+
+    const info: OkPacket = await dal.execute(sql, [vacation.description, vacation.destination, vacation.imageName, vacation.checkIn, vacation.checkOut, vacation.price]);
+
+    vacation.vacationId = info.insertId;
+
+    return vacation;
+
+}
+
+// Update existing vacation: 
+async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
+
+    // Validation: 
+    const error = vacation.validate();
+    if (error) throw new ValidationError(error);
+
+    // Save image to disk if exist:
+    if (vacation.image) {
+
+        // If we have a previous image:
+        if (fs.existsSync("./src/1-assets/images/" + vacation.imageName)) {
+
+            // Delete it:
+            fs.unlinkSync("./src/1-assets/images/" + vacation.imageName);
+        }
+        const extension = vacation.image.name.substring(vacation.image.name.lastIndexOf("."));
+        vacation.imageName = uuid() + extension;
+        await vacation.image.mv("./src/1-assets/images/" + vacation.imageName);
+        delete vacation.image;
+    }
+
+    // Query: 
+    const sql = `
+        UPDATE vacations SET 
+            description = ?,
+            destination = ?,
+            imageName = ?,
+            checkIn = ?,
+            checkOut = ?,
+            price = ?
+        WHERE vacationId = ?
+    `;
+
+    // Execute: 
+    const info: OkPacket = await dal.execute(sql, [vacation.description, vacation.destination, vacation.imageName, vacation.checkIn, vacation.checkOut, vacation.price, vacation.vacationId]);
+
+    // If not exist:
+    if (info.affectedRows === 0) throw new ResourceNotFoundError(vacation.vacationId);
+
+    // Return:
+    return vacation;
+}
+
+// Delete exist vacation:
+async function deleteVacation(vacationId: number): Promise<void> {
+
+    // Query:
+    const sql = `DELETE FROM vacations WHERE vacationId = ?`;
+
+    // Execute: 
+    const info: OkPacket = await dal.execute(sql, [vacationId]);
+
+    // If not exist:
+    if (info.affectedRows === 0) throw new ResourceNotFoundError(vacationId);
+
+}
 
 export default {
     getAllVacations,
-    // addVacation,
-    // deleteVacation
+    getVacationsForUser,
+    addVacation,
+    updateVacation,
+    deleteVacation
 };
+
+

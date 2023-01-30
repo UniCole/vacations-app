@@ -1,7 +1,6 @@
 import mysql from "mysql";
 import appConfig from "./app-config";
 
-// Create a pool of connection to MySQL:
 const connection = mysql.createPool({
     host: appConfig.host,
     user: appConfig.user,
@@ -9,10 +8,10 @@ const connection = mysql.createPool({
     database: appConfig.database
 });
 
-function execute(sql: string): Promise<any> {
+function execute(sql: string, values?: any[]): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-        connection.query(sql, (err, result)=>{
-            if(err) {
+        connection.query(sql, values, (err, result) => {
+            if (err) {
                 reject(err);
                 return;
             }

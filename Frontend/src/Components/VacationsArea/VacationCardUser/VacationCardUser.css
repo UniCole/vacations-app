@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Candal&display=swap');
+
+.VacationCardUser>.Card {
+    position: relative;
+    width: 357px;
+    height: 401px;
+    border-radius: 7px;
+    padding: 0px;
+    margin: 30px;
+    backdrop-filter: blur(25px);
+    transition: all 0.8s;
+    box-shadow: 0 4px 18px 0 #d7b379ad;
+    position: relative;
+    border: 2px solid wheat;
+    transition: 0.7s ease-in-out;
+    overflow: visible;
+}
+
+.VacationCardUser>.Card:hover {
+    width: 357px;
+    height: 401px;
+    border-radius: 7px;
+    padding: 0px;
+    margin: 30px;
+    backdrop-filter: blur(25px);
+    transition: all 0.8s;
+    position: relative;
+    border: 2px solid wheat;
+    transition: 0.7s ease-out;
+    overflow: visible;
+    border-color: #d7b379;
+    box-shadow: 0 4px 18px 0 rgba(58, 34, 10, 0.639);
+}
+
+
+.VacationCardUser>.Card>img {
+    width: 100%;
+    height: 260px;
+    margin-top: -42px;
+    margin-left: 0px;
+    border-radius: 4px;
+    transition: 0.5s ease-in;
+}
+
+.VacationCardUser>.Card>img:hover {
+    transition: 0.5s ease-out;
+    width: 100%;
+    height: 257px;
+    margin-top: -42px;
+    margin-left: 0px;
+    border-radius: 4px;
+}
+
+.VacationCardUser>.Card>span {
+    font-weight: bold;
+    font-size: 18px;
+    position: relative;
+    margin: 10px;
+    margin-left: 250px;
+    color: wheat;
+    background-image: linear-gradient(45deg, #9f7f4b 0%, wheat 100%);
+    border-radius: 1rem;
+    box-shadow: 3px 3px 3px rgba(85, 77, 49, 0.405);
+    padding-right: 6px;
+}
+
+.VacationCardUser>.Card>.Destination {
+    font-family: 'Candal', sans-serif;
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: -2px;
+    margin-bottom: 5px;
+    color: #d7b379;
+}
+
+.VacationCardUser>.Card>p {
+    margin: 4px;
+    color: wheat;
+}
+
+.Card:hover>#card-button {
+    transform: translate(-50%, 50%);
+    opacity: 1;
+}
+
+#card-button {
+    transform: translate(-50%, 125%);
+    width: 60%;
+    border-radius: 1rem;
+    border: none;
+    background-color: #d7b379;
+    color: #fff;
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    opacity: 0;
+    transition: 0.3s ease-out;
+    cursor: pointer;
+}
+
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked,
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
+    color: #d7b379 !important;
+}
+
+.MuiCheckbox-colorPrimary{
+border: none !important;
+}

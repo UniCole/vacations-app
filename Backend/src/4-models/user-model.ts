@@ -8,7 +8,7 @@ class UserModel {
     public lastName: string;
     public username: string;
     public password: string;
-    public role: RoleModel;
+    public roleId: RoleModel;
 
     public constructor(user: UserModel) {
         this.userId = user.userId;
@@ -16,7 +16,7 @@ class UserModel {
         this.lastName = user.lastName;
         this.username = user.username;
         this.password = user.password;
-        this.role = user.role;
+        this.roleId = user.roleId;
     }
 
     public static validationSchema = Joi.object({
@@ -24,16 +24,14 @@ class UserModel {
         firstName: Joi.string().required().min(2).max(20),
         lastName: Joi.string().required().min(2).max(20),
         username: Joi.string().required().min(4).max(20),
-        password: Joi.string().required().min(4).max(20),
-        role: Joi.forbidden() // check later
+        password: Joi.string().required().min(4).max(100),
+        roleId: Joi.forbidden()
     });
 
     public validate(): string {
         const result = UserModel.validationSchema.validate(this);
         return result.error?.message
     }
-
-
 }
 
 export default UserModel;
