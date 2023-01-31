@@ -1,6 +1,5 @@
-## Third project from "John Bryce" college - 
-# Vacations
-## React, Node.js+express, MySQL 
+# Vacations Project
+## Third project from "John Bryce" college based on React, Node.js+express, MySQL 
 
 ### Project requirements:
 ##### MySQL version: v5.2 - or - XAMPP client
