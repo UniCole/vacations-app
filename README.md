@@ -1,4 +1,4 @@
-# Third exam from "John Bryce" college
+# Third project from "John Bryce" college
 ## React, Node.js+express, MySQL 
 
 ### Project requirements:
@@ -17,9 +17,9 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 ```
 ___
 #### To Start the project:
-##### Open the database as admin in XAMPP - OR - Injest the database file: /Database/meetingschedule.sql into MySQL:
+##### Open the database as admin in XAMPP - OR - Injest the database file: /Database/vacation.sql into MySQL:
 ```
-mysql -u<username> -p<password> meetingschedule < /Database/meetingschedule.sql
+mysql -u<username> -p<password> vacation < /Database/vacation.sql
 ```
 ##### Run the Backend: From "Backend folder"
 ```
