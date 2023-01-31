@@ -1,4 +1,5 @@
-## Third project from "John Bryce" college - #Vacation
+## Third project from "John Bryce" college - 
+#Vacation
 ## React, Node.js+express, MySQL 
 
 ### Project requirements:
