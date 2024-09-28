@@ -1,4 +1,4 @@
-# Vacations Project
+# Vacations web service project
 ## The project based on: React, Node.js+express, MySQL 
 
 ### Project requirements:
