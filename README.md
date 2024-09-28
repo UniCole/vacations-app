@@ -1,5 +1,5 @@
 # Vacations web service project
-## The project based on: React, Node.js+express, MySQL 
+## The project based on: Typescript, React, Node.js+express, MySQL 
 
 ### Project requirements:
 ##### MySQL version: v5.2 - or - XAMPP client
